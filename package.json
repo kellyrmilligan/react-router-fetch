@@ -1,0 +1,81 @@
+{
+  "name": "react-router-fetch",
+  "version": "1.0.0",
+  "description": "Calls fetch on matched route components and returns a promise",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kellyrmilligan/react-router-fetch.git"
+  },
+  "scripts": {
+    "build": "npm-run-all clean standard babel",
+    "babel": "babel src -d . -D -s",
+    "babel:watch": "babel src -d . -w -D -s",
+    "clean": "rimraf ./lib",
+    "dev": "npm-run-all clean standard --parallel babel:watch standard:watch",
+    "prepublish": "npm run build",
+    "standard": "standard --fix",
+    "standard:watch": "onchange 'src/**/*.js' -- npm run standard",
+    "test": "cross-env NODE_ENV=test standard && jest",
+    "test:watch": "npm run test -- --watch"
+  },
+  "author": "Kelly Milligan",
+  "license": "ISC",
+  "jest": {
+    "testPathDirs": [
+      "src"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "coverageDirectory": "coverage",
+    "collectCoverage": true,
+    "testRegex": "(/__tests__/.*|\\.(test))\\.js$",
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/fixtures/",
+      "/script/"
+    ]
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "react-router": "^2.0.0 || ^3.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.6.4",
+    "babel-eslint": "^6.1.2",
+    "babel-jest": "^15.0.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "babel-runtime": "^6.11.6",
+    "cross-env": "^2.0.1",
+    "jest": "^15.1.1",
+    "nodemon": "^1.9.0",
+    "npm-run-all": "^1.5.1",
+    "onchange": "^3.0.2",
+    "react-router": "^3.0.0",
+    "rimraf": "^2.5.4",
+    "source-map-support": "^0.4.0",
+    "standard": "^8.5.0"
+  }
+}
