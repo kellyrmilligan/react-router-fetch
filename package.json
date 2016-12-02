@@ -1,6 +1,6 @@
 {
   "name": "react-router-fetch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Calls fetch on matched route components and returns a promise",
   "main": "lib/index.js",
   "repository": {
