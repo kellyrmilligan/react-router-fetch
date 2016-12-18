@@ -2,6 +2,7 @@
   "name": "react-router-fetch",
   "version": "1.0.1",
   "description": "Calls fetch on matched route components and returns a promise",
+  "keywords": "react, react-router, fetch",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
