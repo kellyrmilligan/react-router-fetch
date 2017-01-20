@@ -9,15 +9,15 @@
     "url": "https://github.com/kellyrmilligan/react-router-fetch.git"
   },
   "scripts": {
-    "build": "npm-run-all clean standard babel",
+    "build": "npm-run-all -l --silent clean standard babel",
     "babel": "babel src -d . -D -s",
     "babel:watch": "babel src -d . -w -D -s",
     "clean": "rimraf ./lib",
     "dev": "npm-run-all clean standard --parallel babel:watch standard:watch",
-    "prepublish": "npm run build",
+    "prepublish": "npm-run-all -l --silent test build",
     "standard": "standard --verbose | snazzy",
     "standard:watch": "onchange 'src/**/*.js' -- npm run standard",
-    "test": "cross-env NODE_ENV=test standard && jest",
+    "test": "cross-env NODE_ENV=test jest",
     "test:watch": "npm run test -- --watch",
     "test:coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
