@@ -47,4 +47,5 @@ class Page extends Component {
 ```
 
 
-This module is intended to be a building block for other modules or as a low level part of your application. I wanted something simple that was promise based.
+
+This module is intended to be a building block for other modules or as a low level part of your application.

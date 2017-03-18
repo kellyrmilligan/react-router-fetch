@@ -9,12 +9,12 @@
     "url": "https://github.com/kellyrmilligan/react-router-fetch.git"
   },
   "scripts": {
-    "build": "npm-run-all -l --silent clean standard babel",
+    "build": "npm-run-all -l clean standard babel",
     "babel": "babel src -d . -D -s",
     "babel:watch": "babel src -d . -w -D -s",
     "clean": "rimraf ./lib",
     "dev": "npm-run-all clean standard --parallel babel:watch standard:watch",
-    "prepublish": "npm-run-all -l --silent test build",
+    "prepublish": "npm-run-all -l test build",
     "standard": "standard --verbose | snazzy",
     "standard:watch": "onchange 'src/**/*.js' -- npm run standard",
     "test": "cross-env NODE_ENV=test jest",
@@ -24,7 +24,7 @@
   "author": "Kelly Milligan",
   "license": "ISC",
   "jest": {
-    "testPathDirs": [
+    "roots": [
       "src"
     ],
     "moduleDirectories": [
@@ -57,7 +57,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "react-router": "^4.0.0-beta.6"
+    "react-router": "^4.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -75,7 +75,7 @@
     "nodemon": "^1.9.0",
     "npm-run-all": "^4.0.1",
     "onchange": "^3.0.2",
-    "react-router": "^3.0.0",
+    "react-router": "^4.0.0",
     "rimraf": "^2.5.4",
     "snazzy": "^6.0.0",
     "source-map-support": "^0.4.0",
