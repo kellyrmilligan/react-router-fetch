@@ -14,16 +14,46 @@ it is currently used in
 
 
 ## Usage
-react router fetch understands the structure of render props for the `match` function in react router.
+react router fetch wraps [react-router-config](https://www.npmjs.com/package/react-router-config) `matchRoutes`. It then will go through the routes in a similar fashion as the `README` suggests.
 ```js
-match({ routes, location: url }, (err, redirect, props) => {
-  reactRouterFetch(props, false, { key: '1234' })
-    .then(
-      () => console.log('done'),
-      (err) => console.log(err)
+const App = (props) => (
+  <div />
+)
+
+class Home extends Component {
+  static fetch () {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, 1000, { test: '1234' })
+    })
+  }
+  render () {
+    return (
+      <div>Home</div>
     )
-})
+  }
+}
+
+const routes = [
+  {
+    component: App,
+    routes: [
+      {
+        path: '/',
+        exact: true,
+        component: Home
+      }
+    ]
+  }
+]
+
+reactRouterFetch(routes, { pathname: '/' })
+  .then((results) => {
+    //the results of the fetching are also here if you need them.
+  })
 ```
+
+in a component you would want to pass the `this.props.location` from react-router in order to have full access to that in the static fetch method on the component.
+
 
 ## Specifying route data needs
 This allows you to specify at the route handler level what data that route needs via a static fetch method. The fetching itself should be wired up to redux via thunks, or whatever way you want to handle that. the only requirement is that the static method returns a promise.
@@ -33,10 +63,9 @@ import React, { Component } from 'react'
 
 class Page extends Component {
 
-  static fetch(params, query, options) {
+  static fetch(match, location, options) {
     //return a promise to be resolved later, superagent as an example
     return request('GET', '/search')
-    //you could also use redux and dispatch an action, then map a component to the state to use in render
   }
 
   render() {
@@ -46,6 +75,73 @@ class Page extends Component {
 
 ```
 
-
-
 This module is intended to be a building block for other modules or as a low level part of your application.
+
+## Using in a top level component
+Assuming you have a top level component, you can export it using `withRouter` to get the location prop injected into your component.
+
+```js
+import React, { Component } from 'react'
+import { withRouter } from 'react-router'
+import reactRouterFetch from 'react-router-fetch'
+
+class App extends Component {
+
+  state = {
+    isAppFetching: false,
+    appFetchingError: null
+  }
+
+  componentWillMount () {
+    this.fetchRoutes(this.props)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const current = `${this.props.location.pathname}${this.props.location.search}`
+    const next = `${nextProps.location.pathname}${nextProps.location.search}`
+    if (current === next) {
+     return
+    }
+    this.fetchRoutes(nextProps)
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return !nextState.isAppFetching
+  }
+
+  fetchRoutes (props) {
+    const { dispatch, location } = props
+    this.setState({
+      isAppFetching: true,
+      appFetchingError: null
+    })
+    //maybe show a progress bar somewhere outside of react? go nuts!!
+    reactRouterFetch(routeConfig, location, { dispatch })
+      .then((results) => {
+        this.setState({
+          isAppFetching: false
+        })
+      })
+      .catch((err) => {
+        this.setState({
+          isAppFetching: false,
+          appFetchingError: err
+        })
+      })
+  }
+
+  render () {
+    //do something with isAppFetching for the first render if single page app.
+    // after the first render, the page contents will stay put until the next route's data is ready to go, so you'll have to do something outside of this.
+    return (
+      ...
+    )
+  }
+
+}
+
+
+const connectedApp = connect()(App)
+export default withRouter(connectedApp)
+
+```
