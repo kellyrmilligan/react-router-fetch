@@ -1,64 +1,89 @@
-/* global describe, it, expect, spyOn */
+/* global describe, it, expect */
+import React, { Component } from 'react'
 
-import routeResolver from 'lib/index'
+import reactRouterFetch from 'lib/index'
 
-describe('route-resolver', function () {
+const App = (props) => (
+  <div />
+)
+
+class Home extends Component {
+  static fetch () {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, 1000, { test: '1234' })
+    })
+  }
+  render () {
+    return (
+      <div>Home</div>
+    )
+  }
+}
+
+class Home2 extends Component {
+  render () {
+    return (
+      <div>Home</div>
+    )
+  }
+}
+
+const routes = [
+  {
+    component: App,
+    routes: [
+      {
+        path: '/',
+        exact: true,
+        component: Home
+      }
+    ]
+  }
+]
+
+const routes2 = [
+  {
+    component: App,
+    routes: [
+      {
+        path: '/',
+        exact: true,
+        component: Home2
+      }
+    ]
+  }
+]
+
+const routes3 = [
+  {
+    path: '/',
+    exact: true,
+    component: App
+  }
+]
+
+describe('react-router-fetch', function () {
   it('can be imported', function () {
-    expect(routeResolver).toBeTruthy()
-  })
-  it('will resolve right away if isInitial is true', function (done) {
-    routeResolver({}, true)
-      .then(() => {
-        done()
-      })
+    expect(reactRouterFetch).toBeTruthy()
   })
   it('will call fetch on a route handler if it has one', function (done) {
-    const handler = {
-      fetch () {
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, 1000, { test: '1234' })
-        })
-      }
-    }
-    const handler2 = {
-      fetch () {
-        return new Promise((resolve, reject) => {
-          setTimeout(resolve, 1000, { test: '1234' })
-        })
-      }
-    }
-    const props = {
-      components: [
-        handler,
-        handler2
-      ],
-      params: {},
-      location: {
-        query: {}
-      }
-    }
-    spyOn(handler, 'fetch').and.callThrough()
-    routeResolver(props)
-      .then((response) => {
-        expect(handler.fetch).toHaveBeenCalled()
+    reactRouterFetch(routes, { pathname: '/' })
+      .then((results) => {
+        expect(results[0].test).toBe('1234')
         done()
       })
   })
-  it('will resolve right away if no handlers have fetch', function (done) {
-    const handler = {
-    }
-    const props = {
-      components: [
-        handler
-      ],
-      params: {},
-      location: {
-        query: {}
-      }
-    }
-    routeResolver(props)
-      .then((promises) => {
-        expect(promises.length).toBe(0)
+  it('will resolve with empty if no fetch exists', function (done) {
+    reactRouterFetch(routes2, { pathname: '/' })
+      .then((results) => {
+        expect(results).toBeUndefined()
+        done()
+      })
+  })
+  it('will resolve with empty if no match', function (done) {
+    reactRouterFetch(routes3, { pathname: '/test' })
+      .then((results) => {
+        expect(results).toBeUndefined()
         done()
       })
   })

@@ -1,6 +1,6 @@
 {
   "name": "react-router-fetch",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Calls fetch on matched route components and returns a promise",
   "keywords": "react, react-router, fetch",
   "main": "lib/index.js",
@@ -22,7 +22,7 @@
     "test:coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "author": "Kelly Milligan",
-  "license": "ISC",
+  "license": "MIT",
   "jest": {
     "roots": [
       "src"
@@ -55,9 +55,12 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "peerDependencies": {
-    "react-router": "^4.0.0"
+    "react": "^15.5.4",
+    "react-router": "^4.0.0",
+    "react-router-config": "^1.0.0-beta.3"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -75,7 +78,9 @@
     "nodemon": "^1.9.0",
     "npm-run-all": "^4.0.1",
     "onchange": "^3.0.2",
+    "react": "^15.5.4",
     "react-router": "^4.0.0",
+    "react-router-config": "^1.0.0-beta.3",
     "rimraf": "^2.5.4",
     "snazzy": "^6.0.0",
     "source-map-support": "^0.4.0",
