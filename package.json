@@ -1,6 +1,6 @@
 {
   "name": "react-router-fetch",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Calls fetch on matched route components and returns a promise",
   "keywords": "react, react-router, fetch",
   "main": "lib/index.js",
@@ -55,8 +55,7 @@
   "standard": {
     "parser": "babel-eslint"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "^15.5.4",
     "react-router": "^4.0.0",
