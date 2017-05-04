@@ -9,9 +9,6 @@ module to loop through matched react router handler to call fetch methods for sp
 ## Why?
 I wanted a nice and contained module to be able to initiate requests for route handlers in an app, so that the data would be loaded before the route handler was rendered. This module doesn't accomplish that on it's own, but can be used as a part of a solution to that problem.
 
-it is currently used in
-[react-redux-transition-manager](https://github.com/kellyrmilligan/react-redux-transition-manager) to facilitate requesting page level data needs and rendering a loading indicator while the route transition is occurring.
-
 
 ## Usage
 react router fetch wraps [react-router-config](https://www.npmjs.com/package/react-router-config) `matchRoutes`. It then will go through the routes in a similar fashion as the `README` suggests.
